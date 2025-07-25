@@ -1,0 +1,709 @@
+{
+	"info": {
+		"_postman_id": "baf85a8e-754b-4173-ae3a-b4b2c3a95b5a",
+		"name": "Tool Shop Demo",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "22773263"
+	},
+	"item": [
+		{
+			"name": "Login",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"const responseJson = pm.response.json();\r",
+							"\r",
+							"if (pm.response.code === 200) {\r",
+							"    pm.test(\"Logged in successfully\", function () {\r",
+							"        pm.response.to.have.status(200);\r",
+							"\r",
+							"        // Check Access Token\r",
+							"        pm.expect(responseJson.access_token).to.be.a(\"string\");\r",
+							"        //Check Token Type\r",
+							"        pm.expect(responseJson.token_type).to.be.a(\"string\");\r",
+							"    });\r",
+							"}"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"email\": \"customer@practicesoftwaretesting.com\",\r\n  \"password\": \"welcome01\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://api.practicesoftwaretesting.com/users/login",
+					"protocol": "https",
+					"host": [
+						"api",
+						"practicesoftwaretesting",
+						"com"
+					],
+					"path": [
+						"users",
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Products",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"const responseJson = pm.response.json();\r",
+							"\r",
+							"if (pm.response.code === 200) {\r",
+							"    pm.test(\"Products retrieved successfully\", function () {\r",
+							"        pm.response.to.have.status(200);\r",
+							"\r",
+							"        pm.expect(responseJson.total).to.be.above(0);\r",
+							"    });\r",
+							"} \r",
+							"else if (pm.response.code === 404) {\r",
+							"    pm.test(\"Status code is 404\", function () {\r",
+							"        pm.response.to.have.status(404);\r",
+							"        pm.expect.fail(responseJson.message);\r",
+							"    });\r",
+							"} \r",
+							"else if (pm.response.code === 405) {\r",
+							"    pm.test(\"Status code is 405\", function () {\r",
+							"        pm.response.to.have.status(405);\r",
+							"        pm.expect.fail(responseJson.message);\r",
+							"    });\r",
+							"}"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://api.practicesoftwaretesting.com/products/",
+					"protocol": "https",
+					"host": [
+						"api",
+						"practicesoftwaretesting",
+						"com"
+					],
+					"path": [
+						"products",
+						""
+					],
+					"query": [
+						{
+							"key": "by_brand",
+							"value": null,
+							"description": "Brand ID (string)",
+							"disabled": true
+						},
+						{
+							"key": "by_category",
+							"value": null,
+							"description": "Category ID (string)",
+							"disabled": true
+						},
+						{
+							"key": "is_rental",
+							"value": null,
+							"description": "Retrieve Rentals Products (string - yes/no)",
+							"disabled": true
+						},
+						{
+							"key": "between",
+							"value": null,
+							"description": "Price Range (string - min,max)",
+							"disabled": true
+						},
+						{
+							"key": "sort",
+							"value": null,
+							"description": "Sort Specific Column (string - name,asc OR name,desc OR price,asc OR price,desc)",
+							"disabled": true
+						},
+						{
+							"key": "page",
+							"value": null,
+							"description": "Page Number (int)",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Products",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"const responseJson = pm.response.json();\r",
+							"\r",
+							"if (pm.response.code === 200) {\r",
+							"    pm.test(\"Product created successfully\", function () {\r",
+							"        pm.response.to.have.status(200);\r",
+							"\r",
+							"        pm.expect(responseJson.total).to.be.above(0);\r",
+							"    });\r",
+							"} \r",
+							"else if (pm.response.code === 404) {\r",
+							"    pm.test(\"Status code is 404\", function () {\r",
+							"        pm.response.to.have.status(404);\r",
+							"        pm.expect.fail(responseJson.message);\r",
+							"    });\r",
+							"} \r",
+							"else if (pm.response.code === 405) {\r",
+							"    pm.test(\"Status code is 405\", function () {\r",
+							"        pm.response.to.have.status(405);\r",
+							"        pm.expect.fail(responseJson.message);\r",
+							"    });\r",
+							"}\r",
+							"else if (pm.response.code === 422) {\r",
+							"    pm.test(\"Status code is 422\", function () {\r",
+							"        pm.response.to.have.status(422);\r",
+							"        pm.expect.fail(responseJson.message);\r",
+							"    });\r",
+							"} "
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"name\": \"Test Product\",\r\n  \"description\": \"POST Products\",\r\n  \"price\": 1.99,\r\n  \"category_id\": \"1\",\r\n  \"brand_id\": \"1\",\r\n  \"product_image_id\": \"1\",\r\n  \"is_location_offer\": 1,\r\n  \"is_rental\": 0\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://api.practicesoftwaretesting.com/products/",
+					"protocol": "https",
+					"host": [
+						"api",
+						"practicesoftwaretesting",
+						"com"
+					],
+					"path": [
+						"products",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update_Product_Cart",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"const responseJson = pm.response.json();\r",
+							"\r",
+							"if (pm.response.code === 200) {\r",
+							"    pm.test(\"Product quantity updated successfully\", function () {\r",
+							"        pm.response.to.have.status(200);\r",
+							"\r",
+							"        const responseJson = pm.response.json();\r",
+							"        pm.expect(responseJson.result).to.equals(\"item added or updated\");\r",
+							"    });\r",
+							"}\r",
+							"else if (pm.response.code === 404) {\r",
+							"    pm.test(\"Status code is 404\", function () {\r",
+							"        pm.response.to.have.status(404);\r",
+							"        pm.expect.fail(responseJson.message);\r",
+							"    });\r",
+							"} \r",
+							"else if (pm.response.code === 405) {\r",
+							"    pm.test(\"Status code is 405\", function () {\r",
+							"        pm.response.to.have.status(405);\r",
+							"        pm.expect.fail(responseJson.message);\r",
+							"    });\r",
+							"}\r",
+							"else if (pm.response.code === 422) {\r",
+							"    pm.test(\"Status code is 422\", function () {\r",
+							"        pm.response.to.have.status(422);\r",
+							"        pm.expect.fail(responseJson.message);\r",
+							"    });\r",
+							"}"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"product_id\": \"{{Product_ID}}\",\r\n  \"quantity\": 3\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://api.practicesoftwaretesting.com/carts/{{Cart_ID}}/product/quantity",
+					"protocol": "https",
+					"host": [
+						"api",
+						"practicesoftwaretesting",
+						"com"
+					],
+					"path": [
+						"carts",
+						"{{Cart_ID}}",
+						"product",
+						"quantity"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Product_Cart",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"//const responseJson = pm.response.json();\r",
+							"\r",
+							"if (pm.response.code === 204) {\r",
+							"    pm.test(\"Product deleted successfully\", function () {\r",
+							"        pm.response.to.have.status(204);\r",
+							"    });\r",
+							"} \r",
+							"else if (pm.response.code === 401) {\r",
+							"    pm.test(\"Unauthorized: Status code is 401\", function () {\r",
+							"        pm.response.to.have.status(401);\r",
+							"    });\r",
+							"} \r",
+							"else if (pm.response.code === 404) {\r",
+							"    pm.test(\"Resource not found: Status code is 404\", function () {\r",
+							"        pm.response.to.have.status(404);\r",
+							"    });\r",
+							"} \r",
+							"else if (pm.response.code === 405) {\r",
+							"    pm.test(\"Method is not allowed for the requested route: Status code is 405\", function () {\r",
+							"        pm.response.to.have.status(405);\r",
+							"    });\r",
+							"}\r",
+							"else if (pm.response.code === 409) {\r",
+							"    pm.test(\"Entity is used elsewhere: Status code is 409\", function () {\r",
+							"        pm.response.to.have.status(409);\r",
+							"    });\r",
+							"}\r",
+							"else if (pm.response.code === 422) {\r",
+							"    pm.test(\"Server was not able to process the content: Status code is 422\", function () {\r",
+							"        pm.response.to.have.status(422);\r",
+							"    });\r",
+							"} "
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "https://api.practicesoftwaretesting.com/carts/{{Cart_ID}}/product/{{Product_ID}}",
+					"protocol": "https",
+					"host": [
+						"api",
+						"practicesoftwaretesting",
+						"com"
+					],
+					"path": [
+						"carts",
+						"{{Cart_ID}}",
+						"product",
+						"{{Product_ID}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Add_Product_Cart",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"const responseJson = pm.response.json();\r",
+							"\r",
+							"if (pm.response.code === 200) {\r",
+							"    pm.test(\"Product addedd successfully\", function () {\r",
+							"        pm.response.to.have.status(200);\r",
+							"\r",
+							"        let bodyJson = JSON.parse(pm.request.body.raw);\r",
+							"        pm.environment.set(\"Product_ID\", bodyJson.product_id);\r",
+							"\r",
+							"        const responseJson = pm.response.json();\r",
+							"        pm.expect(responseJson.result).to.equals(\"item added or updated\");\r",
+							"    });\r",
+							"}\r",
+							"else if (pm.response.code === 404) {\r",
+							"    pm.test(\"Status code is 404\", function () {\r",
+							"        pm.response.to.have.status(404);\r",
+							"        pm.expect.fail(responseJson.message);\r",
+							"    });\r",
+							"} \r",
+							"else if (pm.response.code === 405) {\r",
+							"    pm.test(\"Status code is 405\", function () {\r",
+							"        pm.response.to.have.status(405);\r",
+							"        pm.expect.fail(responseJson.message);\r",
+							"    });\r",
+							"}\r",
+							"else if (pm.response.code === 422) {\r",
+							"    pm.test(\"Status code is 422\", function () {\r",
+							"        pm.response.to.have.status(422);\r",
+							"        pm.expect.fail(responseJson.message);\r",
+							"    });\r",
+							"}"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Cart_ID",
+						"value": "{{Cart_ID}}",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"product_id\": \"01K109HPT6CBNJ2TSRMAY84470\",\r\n    \"quantity\": 1\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://api.practicesoftwaretesting.com/carts/{{Cart_ID}}",
+					"protocol": "https",
+					"host": [
+						"api",
+						"practicesoftwaretesting",
+						"com"
+					],
+					"path": [
+						"carts",
+						"{{Cart_ID}}"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Pilers",
+					"originalRequest": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"product_id\": \"01K102NXW7JBB101MJFJ1NX6TK\",\r\n    \"quantity\": 1\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://api.practicesoftwaretesting.com/carts/{{Cart_ID}}",
+							"protocol": "https",
+							"host": [
+								"api",
+								"practicesoftwaretesting",
+								"com"
+							],
+							"path": [
+								"carts",
+								"{{Cart_ID}}"
+							]
+						}
+					},
+					"_postman_previewlanguage": null,
+					"header": null,
+					"cookie": [],
+					"body": null
+				},
+				{
+					"name": "Combination_Pliers",
+					"originalRequest": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"product_id\": \"01K102NXW4WNPYXTRD4KW4S6J6\",\r\n    \"quantity\": 1\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://api.practicesoftwaretesting.com/carts/{{Cart_ID}}",
+							"protocol": "https",
+							"host": [
+								"api",
+								"practicesoftwaretesting",
+								"com"
+							],
+							"path": [
+								"carts",
+								"{{Cart_ID}}"
+							]
+						}
+					},
+					"_postman_previewlanguage": null,
+					"header": null,
+					"cookie": [],
+					"body": null
+				},
+				{
+					"name": "Slip_Joint_Pilers",
+					"originalRequest": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"product_id\": \"01K102NXWBXP7816HDB5KSQR5A\",\r\n    \"quantity\": 1\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://api.practicesoftwaretesting.com/carts/{{Cart_ID}}",
+							"protocol": "https",
+							"host": [
+								"api",
+								"practicesoftwaretesting",
+								"com"
+							],
+							"path": [
+								"carts",
+								"{{Cart_ID}}"
+							]
+						}
+					},
+					"_postman_previewlanguage": null,
+					"header": null,
+					"cookie": [],
+					"body": null
+				}
+			]
+		},
+		{
+			"name": "Create_Cart",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"if (pm.response.code === 201) {\r",
+							"    pm.test(\"Cart created successfully\", function () {\r",
+							"        pm.response.to.have.status(201);\r",
+							"\r",
+							"        // Save Cart ID\r",
+							"        let jsonData = pm.response.json();\r",
+							"        pm.environment.set(\"Cart_ID\", jsonData.id);\r",
+							"\r",
+							"        pm.expect(jsonData.id).to.be.a(\"string\");\r",
+							"    });\r",
+							"} \r",
+							"else if (pm.response.code === 404) {\r",
+							"    pm.test(\"Resource not found: Status code is 404\", function () {\r",
+							"        pm.response.to.have.status(404);\r",
+							"        pm.expect.fail(\"Resource not found: Status code is 404\");\r",
+							"    });\r",
+							"} \r",
+							"else if (pm.response.code === 405) {\r",
+							"    pm.test(\"Method is not allowed for the requested route: Status code is 405\", function () {\r",
+							"        pm.response.to.have.status(405);\r",
+							"        pm.expect.fail(\"Method is not allowed for the requested route: Status code is 405\");\r",
+							"    });\r",
+							"}\r",
+							"else if (pm.response.code === 422) {\r",
+							"    pm.test(\"Status code is 422\", function () {\r",
+							"        pm.response.to.have.status(422);\r",
+							"        pm.expect.fail(\"Server was not able to process the content: Status code is 422\");\r",
+							"    });\r",
+							"}"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "https://api.practicesoftwaretesting.com/carts",
+					"protocol": "https",
+					"host": [
+						"api",
+						"practicesoftwaretesting",
+						"com"
+					],
+					"path": [
+						"carts"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"auth": {
+		"type": "basic",
+		"basic": [
+			{
+				"key": "password",
+				"value": "welcome01",
+				"type": "string"
+			},
+			{
+				"key": "username",
+				"value": "customer@practicesoftwaretesting.com",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"value": "",
+			"type": "string"
+		}
+	]
+}
